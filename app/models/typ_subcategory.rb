@@ -1,0 +1,2 @@
+class TypSubcategory < ApplicationRecord
+end
