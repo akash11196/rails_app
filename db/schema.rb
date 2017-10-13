@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151010084118) do
+ActiveRecord::Schema.define(version: 20171006093422) do
 
   create_table "org_companies", force: :cascade do |t|
     t.string "name", null: false
@@ -32,15 +32,15 @@ ActiveRecord::Schema.define(version: 20151010084118) do
   end
 
   create_table "org_contacts", force: :cascade do |t|
-    t.string "address1", null: false
+    t.string "address1"
     t.string "address2"
-    t.string "city", null: false
-    t.string "postal_code", null: false
-    t.string "email", null: false
-    t.string "business_number", null: false
+    t.string "city"
+    t.string "postal_code"
+    t.string "email"
+    t.string "business_number"
     t.string "cell_number"
-    t.float "latitude", null: false
-    t.float "longitude", null: false
+    t.float "latitude"
+    t.float "longitude"
     t.string "avatar"
     t.integer "typ_contact_id"
     t.integer "typ_country_id"

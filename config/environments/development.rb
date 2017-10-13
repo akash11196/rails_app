@@ -36,14 +36,15 @@ Rails.application.configure do
   config.action_mailer.perform_deliveries = true
   config.action_mailer.default :charset => "utf-8"
   config.action_mailer.smtp_settings = {
-    address:'smtp.gmail.com',
-    port: 587,
-    domain: 'localhost:3000',
-    user_name:'akash11196',
-    password:'akash22315645',
-    authentication:'plain',
-    enable_starttls_auto: true
-  }
+   address: "smtp.sendgrid.net",
+   port: 587,
+   domain: "fixnix.co",
+   authentication: "plain",
+   enable_starttls_auto: true,
+   user_name: "azure_a30b7adf39ce0c71141be73970f9ff5a@azure.com",
+   password: "Marketing2016!"
+ }
+
 
 
   # Print deprecation notices to the Rails logger.

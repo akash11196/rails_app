@@ -25,6 +25,8 @@ gem 'coffee-rails', '~> 4.2'
 gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
+gem  'font-awesome-rails'
+
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
 # Use ActiveModel has_secure_password
@@ -42,6 +44,12 @@ group :development, :test do
   gem 'bootstrap-sass', '~> 3.2.0'
   gem 'devise'
   gem 'jquery-rails'
+  gem  'font-awesome-rails'
+  gem  'pry'
+  gem  'figaro'
+  gem  'fog'
+  gem  'mini_magick'
+  gem  'carrierwave'
   
 
 end
@@ -53,6 +61,7 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'geocoder'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
