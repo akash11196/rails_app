@@ -1,5 +1,5 @@
 class OrgCompaniesController < ApplicationController
-	before_action :signed_in_user, :user_has_role_in_company?, only: [:show, :edit, :update, :list_deliverers, :ajax_add_deliverers, :preferred_deliverers, :people ]
+	before_action :signed_in_user, :user_has_role_in_company?, only: [ :edit, :update, :list_deliverers, :ajax_add_deliverers, :preferred_deliverers, :people ]
 	before_action :allowed_to_edit_company_info?, only: [:edit, :update]
 
 	def new
@@ -35,10 +35,31 @@ class OrgCompaniesController < ApplicationController
 	end
 
 	def edit
-		@company = OrgCompany.find(param[:id]) #Find the company we're dealing with
+		@company = OrgCompany.find(params[:id]) #Find the company we're dealing with
 		# Attributes used to prepopulate the input fields
-		@contactInfo = OrgContact.find_or_create_by(org_company_id: params[:id]).attributes
+		@contactInfo = OrgContact.find_or_create_by(org_company_id: params[:id],org_person_id: nil).attributes
 		@company.org_contacts.build(@contactInfo) # Build the contact input fields associated with company
+	end
+	def show 
+		@company=OrgCompany.find(params[:id])
+		@type_company=TypCompany.find_by_id(@company.typ_company_id)
+		@contactInfo=OrgContact.find_or_create_by(org_company: params[:id], org_person_id:nil).attributes
+		@country= TypCountry.find_by_id(@contactInfo['typ_country_id'])
+		@region = TypRegion.find_by_id(@contactInfo['typ_region_id'])
+	end
+	def update
+		@company=OrgCompany.find(params[:id])
+		@companyInfo ={description: company_edit_params["description"],avatar:company_edit_params["avatar"]}
+		@org_ca = company_params_sanitizer(company_edit_params["org_contacts_attributes"]["0"])
+		@contactInfo = OrgContact.find_or_create_by(org_company_id: params[:id],org_person_id: nil)
+		@contactInfo=@contact.attributes
+		if @contact.update_attributes(@org_ca) && @company.update(@companyInfo)
+			flash[:success]= "Company information updated"
+			redirect_to edit_org_company_path(@company)
+		else
+			@company.org_contacts.build(@contactInfo)
+			render :edit
+	end 
 	end
 
 	private
@@ -79,7 +100,7 @@ class OrgCompaniesController < ApplicationController
 
 	    # Only COO, Director, and Regional Manager are allowed to edit company info
 	    def allowed_to_edit_company_info?
-	    	position = current_org_person.typ_person_id.to_i
+	    	position = current_org_person.typ_position_id.to_i
 	    	if position == 1 || position == 2 || position ==3
 	    		true
 	    	else 
